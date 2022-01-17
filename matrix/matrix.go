@@ -115,7 +115,7 @@ func (m *Matrix) MMulti(other *Matrix) Matrix {
 	return result
 }
 
-func (m *Matrix) VMulti(t *p.Tuple) p.Tuple {
+func (m Matrix) VMulti(t *p.Tuple) p.Tuple {
 	if m.Dimension != 4 {
 		panic("Matrix is not a 4x4 matrix")
 	}
@@ -129,7 +129,7 @@ func (m *Matrix) VMulti(t *p.Tuple) p.Tuple {
 	return tup
 }
 
-func (m *Matrix) Transpose() Matrix {
+func (m Matrix) Transpose() Matrix {
 	result := CreateMatrix(m.Dimension)
 	for i := 0; i < m.Dimension; i++ {
 		for j := 0; j < m.Dimension; j++ {

@@ -14,7 +14,7 @@ type Ray struct {
 
 func (r *Ray) Position_at(t float64) primitives.Tuple {
 	vector_to_point := r.Direction.Scale(t)
-	return r.Origin.Add(&vector_to_point)
+	return r.Origin.Add(vector_to_point)
 }
 
 func (r *Ray) IntersectSphere(shape Sphere) []Intersection {
@@ -22,10 +22,10 @@ func (r *Ray) IntersectSphere(shape Sphere) []Intersection {
 	inverse_transform := shape.T_Matrix.Inverse()
 	ray_transformed := r.Transform(&inverse_transform)
 	center_sphere := primitives.Point(0, 0, 0)
-	sphere_to_ray := ray_transformed.Origin.Sub(&center_sphere)
-	a := ray_transformed.Direction.Dot(&ray_transformed.Direction)
-	b := 2 * sphere_to_ray.Dot(&ray_transformed.Direction)
-	c := sphere_to_ray.Dot(&sphere_to_ray) - 1
+	sphere_to_ray := ray_transformed.Origin.Sub(center_sphere)
+	a := ray_transformed.Direction.Dot(ray_transformed.Direction)
+	b := 2 * sphere_to_ray.Dot(ray_transformed.Direction)
+	c := sphere_to_ray.Dot(sphere_to_ray) - 1
 	discriminant := b*b - 4*a*c
 	if discriminant < 0 {
 		return []Intersection{}

@@ -21,7 +21,7 @@ func DrawClock() {
 	canvas := canvas.NewCanvas(width, height)
 
 	for counter := 0; counter < 100; counter++ {
-		hour_mark := origin.Add(&vec_to_rotate)
+		hour_mark := origin.Add(vec_to_rotate)
 
 		x := int(hour_mark.X)
 		y := int(hour_mark.Y)

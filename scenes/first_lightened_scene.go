@@ -3,24 +3,23 @@ package scenes
 import (
 	"bolijollo/rayos/canvas"
 	"bolijollo/rayos/color"
+	"bolijollo/rayos/lights"
+
 	p "bolijollo/rayos/primitives"
 	"bolijollo/rayos/shapes"
 )
 
-func DrawSphere() {
-	// var rojo = color.NewColor(255, 0, 0)
-	var azul = color.NewColor(0, 0, 183.4)
+func DrawLightenedSphere() {
 	var center_canvas p.Tuple = p.Point(0, 0, 3)
 	var camera_origin p.Tuple = p.Point(0, 0, -7)
-
-	// 1 meter = 20 pixels
+	sphere := shapes.UniqueSphere()
+	sphere.Material.Color = color.NewColor(255, 51, 255)
+	light := lights.CreatePointLight(p.Point(-10, 10, -10), color.White)
 	var height int = 350
 	var width int = 350
 	var max_height int = height / 2
 	var max_width int = width / 2
 	pixels_per_meter := 50.0
-	sphere := shapes.UniqueSphere()
-
 	canvas := canvas.NewCanvas(width, height)
 	for i := 0; i < int(height); i++ {
 		for j := 0; j < int(width); j++ {
@@ -31,14 +30,17 @@ func DrawSphere() {
 			var ray_direction = canvas_point.Sub(camera_origin).Normalize()
 			var ray shapes.Ray = shapes.Ray{Origin: camera_origin, Direction: ray_direction}
 			var intersections = ray.IntersectSphere(sphere)
-
-			if shapes.Hit(sphere, intersections).Object != nil {
+			hit := shapes.Hit(sphere, intersections)
+			if hit.Object != nil {
 				// fmt.Println("HIT", i, j, shapes.Hit(sphere, intersections).T)
-
-				canvas.WritePixel(i, j, azul)
+				point := ray.Position_at(hit.T)
+				normal := sphere.NormalAt(&point)
+				eye := ray.Direction.Minus()
+				color := lights.Lighting(sphere.Material, light, point, eye, normal)
+				canvas.WritePixel(i, j, color)
 
 			}
 		}
 	}
-	canvas.WriteToFile("flat_sphere.ppm")
+	canvas.WriteToFile("lightened_sphere.ppm")
 }

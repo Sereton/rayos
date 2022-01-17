@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	scenes.DrawSphere()
+
+	scenes.DrawLightenedSphere()
 }

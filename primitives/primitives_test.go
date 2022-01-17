@@ -40,7 +40,7 @@ func TestPointCreation(t *testing.T) {
 func TestTupleAddition(t *testing.T) {
 	a := Point(1, 2, 3)
 	b := Vector(4, 5, 6)
-	c := a.Add(&b)
+	c := a.Add(b)
 	if c.X != 5 || c.Y != 7 || c.Z != 9 || c.W != 1 {
 		t.Error("Point Addition failed")
 	}
@@ -63,7 +63,7 @@ func TestTupleNegation(t *testing.T) {
 func TestTupleSubstraction(t *testing.T) {
 	a := Point(1, 2, 3)
 	b := Point(4, 5, 6)
-	c := a.Sub(&b)
+	c := a.Sub(b)
 	if c.X != -3 || c.Y != -3 || c.Z != -3 || c.W != 0 {
 		t.Error("Point Substraction failed")
 	}
@@ -75,7 +75,7 @@ func TestTupleSubstraction(t *testing.T) {
 func TestSubtractVectorFromPoint(t *testing.T) {
 	a := Point(1, 2, 3)
 	b := Vector(4, 5, 6)
-	c := a.Sub(&b)
+	c := a.Sub(b)
 	if c.X != -3 || c.Y != -3 || c.Z != -3 || c.W != 1 {
 		t.Error("Point Substraction failed")
 	}
@@ -87,7 +87,7 @@ func TestSubtractVectorFromPoint(t *testing.T) {
 func TestVectorSubtraction(t *testing.T) {
 	a := Vector(1, 2, 3)
 	b := Vector(4, 5, 6)
-	c := a.Sub(&b)
+	c := a.Sub(b)
 	if c.X != -3 || c.Y != -3 || c.Z != -3 || c.W != 0 {
 		t.Error("Vector Substraction failed")
 	}

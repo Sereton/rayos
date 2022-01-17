@@ -15,19 +15,19 @@ func (t *Tuple) Vector() bool {
 
 }
 
-func (t *Tuple) Add(o *Tuple) Tuple {
+func (t Tuple) Add(o Tuple) Tuple {
 	return Tuple{t.X + o.X, t.Y + o.Y, t.Z + o.Z, t.W + o.W}
 }
 
-func (t *Tuple) Minus() Tuple {
+func (t Tuple) Minus() Tuple {
 	return Tuple{-t.X, -t.Y, -t.Z, t.W}
 }
 
-func (t *Tuple) Sub(o *Tuple) Tuple {
+func (t Tuple) Sub(o Tuple) Tuple {
 	return Tuple{t.X - o.X, t.Y - o.Y, t.Z - o.Z, t.W - o.W}
 }
 
-func (t *Tuple) Scale(f float64) Tuple {
+func (t Tuple) Scale(f float64) Tuple {
 	return Tuple{t.X * f, t.Y * f, t.Z * f, t.W}
 }
 
@@ -35,7 +35,7 @@ func (t *Tuple) Div(f float64) Tuple {
 	return Tuple{t.X / f, t.Y / f, t.Z / f, t.W}
 }
 
-func (t *Tuple) Dot(o *Tuple) float64 {
+func (t Tuple) Dot(o Tuple) float64 {
 	return t.X*o.X + t.Y*o.Y + t.Z*o.Z
 }
 
@@ -49,6 +49,10 @@ func (t *Tuple) Length() float64 {
 
 func (t Tuple) Normalize() Tuple {
 	return t.Div(t.Length())
+}
+
+func (t Tuple) Reflect(n Tuple) Tuple {
+	return t.Sub(n.Scale(2 * t.Dot(n)))
 }
 
 func Point(x, y, z float64) Tuple {
