@@ -1,8 +1,9 @@
 package canvas
 
 import (
+	"bolijollo/rayos/color"
 	"fmt"
-	"rayos/color"
+	"os"
 )
 
 type Canvas struct {
@@ -13,10 +14,6 @@ type Canvas struct {
 
 func (c *Canvas) GetPixel(x, y int) color.Color {
 	return c.Pixels[x][y]
-}
-
-func (c *Canvas) SetPixel(x, y int, color color.Color) {
-	c.Pixels[x][y] = color
 }
 
 func NewCanvas(width, height int) Canvas {
@@ -43,4 +40,13 @@ func (c *Canvas) WritePPM() string {
 		ppm += "\n"
 	}
 	return ppm
+}
+
+func (c *Canvas) WriteToFile(filename string) {
+
+	data := c.WritePPM()
+	err := os.WriteFile(filename, []byte(data), 0644)
+	if err != nil {
+		fmt.Println(err)
+	}
 }

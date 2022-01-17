@@ -1,8 +1,8 @@
 package matrix
 
 import (
+	p "bolijollo/rayos/primitives"
 	"math"
-	p "rayos/math"
 )
 
 type Matrix struct {
@@ -27,6 +27,60 @@ func Identity(dimension int) Matrix {
 	for i := 0; i < dimension; i++ {
 		m.Elements[i][i] = 1
 	}
+	return m
+}
+
+func Translation(x, y, z float64) Matrix {
+	m := Identity(4)
+	m.Elements[0][3] = x
+	m.Elements[1][3] = y
+	m.Elements[2][3] = z
+	return m
+}
+
+func Scaling(x, y, z float64) Matrix {
+	m := Identity(4)
+	m.Elements[0][0] = x
+	m.Elements[1][1] = y
+	m.Elements[2][2] = z
+	return m
+}
+
+func Rotation_Z(theta float64) Matrix {
+	m := Identity(4)
+	m.Elements[0][0] = math.Cos(theta)
+	m.Elements[0][1] = -math.Sin(theta)
+	m.Elements[1][0] = math.Sin(theta)
+	m.Elements[1][1] = math.Cos(theta)
+	return m
+}
+
+func Rotation_X(theta float64) Matrix {
+	m := Identity(4)
+	m.Elements[1][1] = math.Cos(theta)
+	m.Elements[1][2] = -math.Sin(theta)
+	m.Elements[2][1] = math.Sin(theta)
+	m.Elements[2][2] = math.Cos(theta)
+	return m
+}
+
+func Rotation_Y(theta float64) Matrix {
+	m := Identity(4)
+	m.Elements[0][0] = math.Cos(theta)
+	m.Elements[0][2] = math.Sin(theta)
+	m.Elements[2][0] = -math.Sin(theta)
+	m.Elements[2][2] = math.Cos(theta)
+	return m
+}
+
+func Shearing(xy, xz, yx, yz, zx, zy float64) Matrix {
+	m := Identity(4)
+	m.Elements[0][1] = xy
+	m.Elements[0][2] = xz
+	m.Elements[1][0] = yx
+	m.Elements[1][2] = yz
+	m.Elements[2][0] = zx
+	m.Elements[2][1] = zy
 	return m
 }
 

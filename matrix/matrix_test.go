@@ -1,8 +1,8 @@
 package matrix
 
 import (
+	pp "bolijollo/rayos/primitives"
 	"math"
-	pp "rayos/math"
 	"testing"
 )
 

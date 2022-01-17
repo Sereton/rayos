@@ -1,7 +1,7 @@
 package color
 
 import (
-	primitives "rayos/math"
+	primitives "bolijollo/rayos/primitives"
 )
 
 type Color primitives.Tuple
