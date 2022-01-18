@@ -36,3 +36,12 @@ func TestNormalAtSpherePoint(t *testing.T) {
 	}
 
 }
+
+func TestSphereImplementInterfaceShape(t *testing.T) {
+	s := UniqueSphere()
+	ray := Ray{Origin: primitives.Point(0, 0, -5), Direction: primitives.Vector(0, 0, 1)}
+	var i Shape = &s
+	if i.Intersect(&ray) == nil {
+		t.Error("Sphere does not implement Shape interface")
+	}
+}
