@@ -17,9 +17,10 @@ func (r *Ray) Position_at(t float64) primitives.Tuple {
 	return r.Origin.Add(vector_to_point)
 }
 
-func (r *Ray) IntersectSphere(shape Sphere) []Intersection {
+func (r *Ray) IntersectShape(shape Shape) []Intersection {
 
-	inverse_transform := shape.T_Matrix.Inverse()
+	inverse_transform := shape.GET_Matrix()
+	inverse_transform = inverse_transform.Inverse()
 	ray_transformed := r.Transform(&inverse_transform)
 	center_sphere := primitives.Point(0, 0, 0)
 	sphere_to_ray := ray_transformed.Origin.Sub(center_sphere)

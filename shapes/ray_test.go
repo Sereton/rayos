@@ -27,7 +27,7 @@ func TestMovingAlongADirection(t *testing.T) {
 func TestRaySphereIntersection(t *testing.T) {
 	r := Ray{primitives.Point(0, 0, -5), primitives.Vector(0, 0, 1)}
 	s := UniqueSphere()
-	xs := r.IntersectSphere(s)
+	xs := r.IntersectShape(s)
 	if len(xs) != 2 {
 		t.Error("Ray-sphere intersection failed")
 	}

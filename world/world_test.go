@@ -6,6 +6,7 @@ import (
 	"bolijollo/rayos/matrix"
 	"bolijollo/rayos/primitives"
 	"bolijollo/rayos/shapes"
+	"fmt"
 	"testing"
 )
 
@@ -19,7 +20,7 @@ func TestWorldCreation(t *testing.T) {
 	}
 }
 
-func TestWorldAssingment(t *testing.T) {
+func TestWorldAssignment(t *testing.T) {
 	w := CreateWorld()
 	s1 := shapes.UniqueSphere()
 	s2 := shapes.UniqueSphere()
@@ -37,7 +38,17 @@ func TestWorldAssingment(t *testing.T) {
 		t.Error("World.Objects should have 2 elements")
 	}
 	if len(w.Lights) != 1 || w.Lights[0] != &light {
-		t.Error("World.Lights should have 1 element")
+		t.Error("World.Lights should have 1 element and be equal to the light")
 	}
 
+}
+
+func TestIntersectAWorldWithARay(t *testing.T) {
+	world := DefaultWorld()
+	ray := shapes.Ray{Origin: primitives.Point(0, 0, -5), Direction: primitives.Vector(0, 0, 1)}
+	xs := world.Intersect(&ray)
+	if len(xs) != 4 || xs[0] != 4 || xs[1] != 4.5 || xs[2] != 5.5 || xs[3] != 6 {
+		t.Error("The world should have 4 intersections with the ray")
+		fmt.Println(xs)
+	}
 }

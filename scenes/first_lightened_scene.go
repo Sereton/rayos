@@ -29,7 +29,7 @@ func DrawLightenedSphere() {
 
 			var ray_direction = canvas_point.Sub(camera_origin).Normalize()
 			var ray shapes.Ray = shapes.Ray{Origin: camera_origin, Direction: ray_direction}
-			var intersections = ray.IntersectSphere(sphere)
+			var intersections = ray.IntersectShape(&sphere)
 			hit := shapes.Hit(sphere, intersections)
 			if hit.Object != nil {
 				// fmt.Println("HIT", i, j, shapes.Hit(sphere, intersections).T)

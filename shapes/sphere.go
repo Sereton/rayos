@@ -35,3 +35,7 @@ func (s *Sphere) NormalAt(p *primitives.Tuple) primitives.Tuple {
 	return world_normal.Normalize()
 
 }
+
+func (s Sphere) GET_Matrix() matrix.Matrix {
+	return s.T_Matrix
+}
