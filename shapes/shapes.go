@@ -7,7 +7,7 @@ import (
 )
 
 type Shape interface {
-	Intersect(ray *Ray) []float64
+	Intersect(ray *Ray) []Intersection
 	GET_Matrix() matrix.Matrix
 	GET_Material() materials.Material
 	NormalAt(p primitives.Tuple) primitives.Tuple
