@@ -32,7 +32,7 @@ func DrawSphere() {
 			var ray shapes.Ray = shapes.Ray{Origin: camera_origin, Direction: ray_direction}
 			var intersections = ray.IntersectShape(sphere)
 
-			if shapes.Hit(sphere, intersections).Object != nil {
+			if shapes.Hit(intersections).Object != nil {
 				// fmt.Println("HIT", i, j, shapes.Hit(sphere, intersections).T)
 
 				canvas.WritePixel(i, j, azul)

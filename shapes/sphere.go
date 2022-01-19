@@ -22,12 +22,12 @@ func UniqueSphere() Sphere {
 }
 
 func (s Sphere) ChangeTransformation(m matrix.Matrix) Sphere {
-	s.T_Matrix = m.MMulti(&s.T_Matrix)
+	s.T_Matrix = m.MMulti(s.T_Matrix)
 	return s
 }
 
-func (s *Sphere) NormalAt(p *primitives.Tuple) primitives.Tuple {
-	object_point := s.T_Matrix.Inverse().VMulti(p)
+func (s Sphere) NormalAt(p primitives.Tuple) primitives.Tuple {
+	object_point := s.T_Matrix.Inverse().VMulti(&p)
 	origin := primitives.Point(0, 0, 0)
 	object_normal := object_point.Sub(origin)
 	world_normal := s.T_Matrix.Inverse().Transpose().VMulti(&object_normal)
@@ -38,4 +38,8 @@ func (s *Sphere) NormalAt(p *primitives.Tuple) primitives.Tuple {
 
 func (s Sphere) GET_Matrix() matrix.Matrix {
 	return s.T_Matrix
+}
+
+func (s Sphere) GET_Material() materials.Material {
+	return s.Material
 }

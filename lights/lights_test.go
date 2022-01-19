@@ -14,6 +14,6 @@ func TestNightningCalculation(t *testing.T) {
 	normalv := p.Vector(0, 0, -1)
 	light := CreatePointLight(p.Point(0, 10, -10), color.White)
 	m := mat.DefaultMaterial()
-	result := Lighting(m, light, point, normalv, eyev)
+	result := Lighting(m, &light, point, normalv, eyev)
 	fmt.Println("result es ahora veamos:", result, "y esperamos:", 0.7364*255)
 }

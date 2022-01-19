@@ -16,7 +16,7 @@ func CreatePointLight(position primitives.Tuple, color color.Color) PointLight {
 	return PointLight{Position: position, Intensity: color}
 }
 
-func Lighting(material materials.Material, light PointLight, Point primitives.Tuple, EyeV primitives.Tuple, NormalV primitives.Tuple) color.Color {
+func Lighting(material materials.Material, light *PointLight, Point primitives.Tuple, EyeV primitives.Tuple, NormalV primitives.Tuple) color.Color {
 	effectiveColor := color.Hadamard(&material.Color, &light.Intensity)
 
 	// find direction to light source

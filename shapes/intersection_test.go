@@ -26,7 +26,5 @@ func TestIntersectionsFunction(t *testing.T) {
 	if intersections[1].T != 2 {
 		t.Errorf("Expected %f, got %f", 2.0, intersections[1].T)
 	}
-	if intersections[0].Object != intersections[1].Object {
-		t.Errorf("Expected %v, got %v", intersections[0].Object, intersections[1].Object)
-	}
+
 }

@@ -27,7 +27,7 @@ func DefaultWorld() *World {
 	s1.Material.Color = color.NewColor(200, 255, 150)
 	s1.Material.Diffuse = 0.7
 	s1.Material.Specular = 0.2
-	s2.Material.Color = color.NewColor(255, 200, 200)
+
 	s2.T_Matrix = matrix.Scaling(0.5, 0.5, 0.5)
 	light := lights.CreatePointLight(primitives.Point(-10, 10, -10), color.NewColor(255, 255, 255))
 	w.AddObject(s1)
@@ -43,21 +43,41 @@ func (w *World) AddLight(light *lights.PointLight) {
 	w.Lights = append(w.Lights, light)
 }
 
-func (w *World) Intersect(ray *shapes.Ray) []float64 {
-	intersections := make([]float64, 0)
+func (w *World) Intersect(ray *shapes.Ray) []shapes.Intersection {
+	intersections := make([]shapes.Intersection, 0)
 	for _, obj := range w.Objects {
 		intersections_shape := ray.IntersectShape(obj)
 		if len(intersections_shape) > 0 {
-			for _, t := range intersections_shape {
-				intersections = append(intersections, t.T)
-			}
+
+			intersections = append(intersections, intersections_shape...)
+
 		}
 
 	}
 	//sort intersections before returning
-
-	sort.Float64s(intersections)
+	sort.Slice(intersections, func(i, j int) bool {
+		return intersections[i].T < intersections[j].T
+	})
 
 	return intersections
 
+}
+
+func Shade_Hit(w *World, comps *shapes.Computation) color.Color {
+	return lights.Lighting(comps.Object.GET_Material(), w.Lights[0], comps.Point, comps.EyeV, comps.NormalV)
+}
+
+func Color_At(ray *shapes.Ray, world *World) color.Color {
+	intersections := world.Intersect(ray)
+
+	if intersections == nil {
+		return color.Black
+	}
+	hit := shapes.Hit(intersections)
+	if hit.T == 0 {
+		return color.Black
+	}
+	// fmt.Println("intersections", intersections[1].T, "hit", hit, intersections[0].T)
+	comps := ray.PrepareComputations(hit.Object, hit)
+	return Shade_Hit(world, &comps)
 }

@@ -22,6 +22,10 @@ func (m *Matrix) Get(i, j int) float64 {
 	return m.Elements[i][j]
 }
 
+func (m *Matrix) Set(i, j int, value float64) {
+	m.Elements[i][j] = value
+}
+
 func Identity(dimension int) Matrix {
 	m := CreateMatrix(dimension)
 	for i := 0; i < dimension; i++ {
@@ -99,7 +103,7 @@ func (m *Matrix) Equal(other *Matrix) bool {
 
 }
 
-func (m *Matrix) MMulti(other *Matrix) Matrix {
+func (m Matrix) MMulti(other Matrix) Matrix {
 	if m.Dimension != other.Dimension {
 		panic("Matrix dimensions do not match")
 	}

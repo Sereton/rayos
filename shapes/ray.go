@@ -48,3 +48,27 @@ func (ray *Ray) Transform(m *matrix.Matrix) Ray {
 
 	return new_ray
 }
+
+func (ray *Ray) PrepareComputations(s Shape, i Intersection) Computation {
+
+	comps := Computation{}
+	comps.T = i.T
+	comps.Object = i.Object
+
+	comps.Point = ray.Position_at(i.T)
+	comps.EyeV = ray.Direction.Minus()
+	v := comps.Point
+
+	comps.NormalV = comps.Object.NormalAt(v)
+
+	if comps.EyeV.Dot(comps.NormalV) < 0 {
+
+		comps.Inside = true
+		comps.NormalV = comps.NormalV.Scale(-1)
+
+	} else {
+		comps.Inside = false
+	}
+
+	return comps
+}

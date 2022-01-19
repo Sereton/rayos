@@ -39,7 +39,7 @@ func (t Tuple) Dot(o Tuple) float64 {
 	return t.X*o.X + t.Y*o.Y + t.Z*o.Z
 }
 
-func (t *Tuple) Cross(o *Tuple) Tuple {
+func (t Tuple) Cross(o Tuple) Tuple {
 	return Tuple{t.Y*o.Z - t.Z*o.Y, t.Z*o.X - t.X*o.Z, t.X*o.Y - t.Y*o.X, 0}
 }
 

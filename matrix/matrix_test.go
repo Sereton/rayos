@@ -49,7 +49,7 @@ func TestInverseMatrix(t *testing.T) {
 	m.Elements[3][2] = -1
 	m.Elements[3][3] = 6
 	l := m.Inverse()
-	s := m.MMulti(&l)
+	s := m.MMulti(l)
 	eps := 0.000001
 	if math.Abs(s.Elements[0][0]-1) > eps || math.Abs(s.Elements[0][1]) > eps ||
 		math.Abs(s.Elements[0][2]) > eps || math.Abs(s.Elements[0][3]) > eps ||

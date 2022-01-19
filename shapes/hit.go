@@ -2,7 +2,8 @@ package shapes
 
 import "math"
 
-func Hit(s Shape, intersections []Intersection) Intersection {
+func Hit(intersections []Intersection) Intersection {
+
 	var hit Intersection
 	var nearest_intersection Intersection
 	var nearest_distance float64 = math.MaxFloat64

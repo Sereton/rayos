@@ -47,8 +47,34 @@ func TestIntersectAWorldWithARay(t *testing.T) {
 	world := DefaultWorld()
 	ray := shapes.Ray{Origin: primitives.Point(0, 0, -5), Direction: primitives.Vector(0, 0, 1)}
 	xs := world.Intersect(&ray)
-	if len(xs) != 4 || xs[0] != 4 || xs[1] != 4.5 || xs[2] != 5.5 || xs[3] != 6 {
+	if len(xs) != 4 || xs[0].T != 4 || xs[1].T != 4.5 || xs[2].T != 5.5 || xs[3].T != 6 {
 		t.Error("The world should have 4 intersections with the ray")
 		fmt.Println(xs)
 	}
+}
+
+func TestShadingOutsideIntersection(t *testing.T) {
+	w := DefaultWorld()
+	r := shapes.Ray{Origin: primitives.Point(0, 0, -5), Direction: primitives.Vector(0, 0, 1)}
+	s := w.Objects[0]
+	i := shapes.Intersection{T: 4, Object: s}
+	comps := r.PrepareComputations(s, i)
+	color := Shade_Hit(w, &comps)
+
+	fmt.Println(color.Scale(1.0 / 255.0))
+
+}
+
+func TestShadingInsideIntersection(t *testing.T) {
+	w := DefaultWorld()
+	luz := lights.CreatePointLight(primitives.Point(0, 0.25, 0), color.NewColor(255, 255, 255))
+	w.AddLight(&luz)
+	r := shapes.Ray{Origin: primitives.Point(0, 0, 0), Direction: primitives.Vector(0, 0, 1)}
+	s := w.Objects[1]
+	i := shapes.Intersection{T: 0.5, Object: s}
+	comps := r.PrepareComputations(s, i)
+	color := Shade_Hit(w, &comps)
+
+	fmt.Println("Color del lado interno", color.Scale(1.0/255.0))
+
 }

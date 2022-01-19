@@ -22,14 +22,14 @@ func TestNormalAtSpherePoint(t *testing.T) {
 	eps := 0.00001
 	s := UniqueSphere()
 	p := primitives.Point(1, 0, 0)
-	n := s.NormalAt(&p)
+	n := s.NormalAt(p)
 	if n.X != 1 || n.Y != 0 || n.Z != 0 {
 		t.Error("Sphere normal at point is not (1, 0, 0)")
 	}
 
 	s.T_Matrix = matrix.Translation(0, 1, 0)
 	p2 := primitives.Point(0, 1.70711, -0.70711)
-	n2 := s.NormalAt(&p2)
+	n2 := s.NormalAt(p2)
 	if math.Abs(n2.X-0) > eps || math.Abs(n2.Y-0.70711) > eps || math.Abs(n2.Z+0.70711) > eps || n2.W != 0 {
 		fmt.Println("n2:", n2)
 		t.Error("Sphere normal at point is not (0, 0.70711, -0.70711,0)")

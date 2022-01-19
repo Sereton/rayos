@@ -35,3 +35,16 @@ func TestRaySphereIntersection(t *testing.T) {
 		t.Error("Ray-sphere intersection failed")
 	}
 }
+
+func TestPrepareComputations(t *testing.T) {
+	r := Ray{primitives.Point(0, 0, 0), primitives.Vector(0, 0, 1)}
+	s := UniqueSphere()
+
+	i := Intersection{1, &s}
+	computation := r.PrepareComputations(s, i)
+	if computation.T != 1 || computation.Object != &s || computation.Point != primitives.Point(0, 0, 1) ||
+		computation.EyeV != primitives.Vector(0, 0, -1) ||
+		computation.NormalV != primitives.Vector(0, 0, -1) || computation.Inside != true {
+		t.Error("PrepareComputation failed")
+	}
+}
