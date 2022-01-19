@@ -16,7 +16,8 @@ func CreatePointLight(position primitives.Tuple, color color.Color) PointLight {
 	return PointLight{Position: position, Intensity: color}
 }
 
-func Lighting(material materials.Material, light *PointLight, Point primitives.Tuple, EyeV primitives.Tuple, NormalV primitives.Tuple) color.Color {
+func Lighting(material materials.Material, light *PointLight, Point primitives.Tuple,
+	EyeV primitives.Tuple, NormalV primitives.Tuple, in_shadow bool) color.Color {
 	effectiveColor := color.Hadamard(&material.Color, &light.Intensity)
 
 	// find direction to light source
@@ -26,6 +27,11 @@ func Lighting(material materials.Material, light *PointLight, Point primitives.T
 	diffuse := color.Black
 	specular := color.Black
 	ambient := effectiveColor.Scale(material.Ambient)
+
+	// return if the point is in shadow
+	if in_shadow {
+		return ambient
+	}
 
 	// Calculate light_dot_normal
 	light_dot_normal := lightV.Dot(NormalV)

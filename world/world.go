@@ -5,19 +5,20 @@ import (
 	"bolijollo/rayos/lights"
 	"bolijollo/rayos/matrix"
 	"bolijollo/rayos/primitives"
+
 	"bolijollo/rayos/shapes"
 	"sort"
 )
 
 type World struct {
-	Objects []shapes.Shape       // List of objects in the world
-	Lights  []*lights.PointLight // List of lights in the world
+	Objects []shapes.Shape      // List of objects in the world
+	Lights  []lights.PointLight // List of lights in the world
 }
 
 func CreateWorld() *World {
 	return &World{
 		Objects: make([]shapes.Shape, 0),
-		Lights:  make([]*lights.PointLight, 0),
+		Lights:  make([]lights.PointLight, 0),
 	}
 }
 func DefaultWorld() *World {
@@ -32,14 +33,14 @@ func DefaultWorld() *World {
 	light := lights.CreatePointLight(primitives.Point(-10, 10, -10), color.NewColor(255, 255, 255))
 	w.AddObject(s1)
 	w.AddObject(&s2)
-	w.AddLight(&light)
+	w.AddLight(light)
 	return w
 }
 func (w *World) AddObject(obj shapes.Shape) {
 	w.Objects = append(w.Objects, obj)
 }
 
-func (w *World) AddLight(light *lights.PointLight) {
+func (w *World) AddLight(light lights.PointLight) {
 	w.Lights = append(w.Lights, light)
 }
 
@@ -64,7 +65,12 @@ func (w *World) Intersect(ray *shapes.Ray) []shapes.Intersection {
 }
 
 func Shade_Hit(w *World, comps *shapes.Computation) color.Color {
-	return lights.Lighting(comps.Object.GET_Material(), w.Lights[0], comps.Point, comps.EyeV, comps.NormalV)
+	epsilon := 0.001
+
+	overPoint := comps.Point.Add(comps.NormalV.Scale(epsilon))
+	shadowed := Is_Shadowed(*w, overPoint)
+	return lights.Lighting(comps.Object.GET_Material(), &w.Lights[0],
+		comps.Point, comps.EyeV, comps.NormalV, shadowed)
 }
 
 func Color_At(ray *shapes.Ray, world *World) color.Color {

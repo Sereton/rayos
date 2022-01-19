@@ -36,7 +36,8 @@ func DrawLightenedSphere() {
 				point := ray.Position_at(hit.T)
 				normal := sphere.NormalAt(point)
 				eye := ray.Direction.Minus()
-				color := lights.Lighting(sphere.Material, &light, point, eye, normal)
+				in_shadow := false
+				color := lights.Lighting(sphere.Material, &light, point, eye, normal, in_shadow)
 				canvas.WritePixel(i, j, color)
 
 			}

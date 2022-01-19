@@ -43,7 +43,7 @@ func (t Tuple) Cross(o Tuple) Tuple {
 	return Tuple{t.Y*o.Z - t.Z*o.Y, t.Z*o.X - t.X*o.Z, t.X*o.Y - t.Y*o.X, 0}
 }
 
-func (t *Tuple) Length() float64 {
+func (t Tuple) Length() float64 {
 	return math.Sqrt(t.X*t.X + t.Y*t.Y + t.Z*t.Z)
 }
 

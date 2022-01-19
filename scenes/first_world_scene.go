@@ -15,8 +15,8 @@ import (
 
 func DrawFirstWorld() {
 
-	var height int = 400
-	var width int = 800
+	var height int = 40 * 10
+	var width int = 80 * 10
 	camara := camera.CreateCamera(width, height, math.Pi/3)
 
 	camara.Transform = camera.View_transformation(primitives.Point(0, 1.5, -5),
@@ -28,7 +28,7 @@ func DrawFirstWorld() {
 
 	// Add a point light source
 	light := lights.CreatePointLight(primitives.Point(10, 10, -10), color.White)
-	world.AddLight(&light)
+	world.AddLight(light)
 
 	// Add a floor
 	floor := shapes.UniqueSphere()

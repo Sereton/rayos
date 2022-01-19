@@ -32,12 +32,12 @@ func TestWorldAssignment(t *testing.T) {
 	light := lights.CreatePointLight(primitives.Point(0, 0, -10), color.NewColor(255, 255, 255))
 	w.AddObject(s1)
 	w.AddObject(&s2)
-	w.AddLight(&light)
+	w.AddLight(light)
 
 	if len(w.Objects) != 2 {
 		t.Error("World.Objects should have 2 elements")
 	}
-	if len(w.Lights) != 1 || w.Lights[0] != &light {
+	if len(w.Lights) != 1 || w.Lights[0] != light {
 		t.Error("World.Lights should have 1 element and be equal to the light")
 	}
 
@@ -68,7 +68,7 @@ func TestShadingOutsideIntersection(t *testing.T) {
 func TestShadingInsideIntersection(t *testing.T) {
 	w := DefaultWorld()
 	luz := lights.CreatePointLight(primitives.Point(0, 0.25, 0), color.NewColor(255, 255, 255))
-	w.AddLight(&luz)
+	w.AddLight(luz)
 	r := shapes.Ray{Origin: primitives.Point(0, 0, 0), Direction: primitives.Vector(0, 0, 1)}
 	s := w.Objects[1]
 	i := shapes.Intersection{T: 0.5, Object: s}
